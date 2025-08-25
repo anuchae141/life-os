@@ -1,0 +1,125 @@
+
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0ea5e9" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'none'; frame-ancestors 'none'; object-src 'none'">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon-180.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>Life OS — Secure + Biometric</title>
+</head>
+<body>
+  <header>
+    <h1>Life OS <span class="badge">secure + biometric</span></h1>
+    <div class="sub">AES-256-GCM + Passcode • WebAuthn (Face/Touch ID) • Offline-first (PWA) • v1.0.0</div>
+  </header>
+
+  <div class="wrap" id="app" style="visibility:hidden">
+    <section class="card" id="themeCard">
+      <div class="row" style="justify-content:space-between;align-items:center">
+        <div><strong>การแสดงผล</strong><div class="muted tiny">สลับโหมดสว่าง/มืด</div></div>
+        <label style="display:flex;align-items:center;gap:8px"><span class="muted tiny">Light</span><input id="lo-theme" type="checkbox"><span class="muted tiny">Dark</span></label>
+      </div>
+    </section>
+
+    <section class="card" id="daily">
+      <h2>แผนประจำวัน</h2>
+      <div class="grid-3">
+        <div><label>Deep Build เวลา</label><input id="lo-deep-time" type="time"></div>
+        <div><label>Admin เวลา</label><input id="lo-admin-time" type="time"></div>
+        <div><label>Explore/Learn เวลา</label><input id="lo-explore-time" type="time"></div>
+      </div>
+      <div class="grid-3" style="margin-top:8px">
+        <label><input id="lo-breaks" type="checkbox"> เตือนให้ลุกเดิน/ยืดทุก 60–90 นาที</label>
+        <label><input id="lo-water" type="checkbox"> น้ำ 1 แก้วก่อนกาแฟ</label>
+        <label><input id="lo-sun" type="checkbox"> แดดเช้า 5–10 นาที</label>
+      </div>
+      <h3>Shutdown (10 นาที)</h3>
+      <div class="grid-3">
+        <div><label>✅ วันนี้ทำเสร็จ</label><textarea id="lo-done"></textarea></div>
+        <div><label>🔧 ติด/ต้องการช่วย</label><textarea id="lo-stuck"></textarea></div>
+        <div><label>🔜 พรุ่งนี้เริ่มตรงนี้</label><textarea id="lo-next"></textarea></div>
+      </div>
+    </section>
+
+    <section class="card" id="weekly">
+      <h2>Weekly Big 3 + WIP≤2</h2>
+      <div class="grid-3">
+        <div><input id="lo-b1" type="text" placeholder="Big 1"><input id="lo-b1def" type="text" placeholder="นิยามเสร็จ"></div>
+        <div><input id="lo-b2" type="text" placeholder="Big 2"><input id="lo-b2def" type="text" placeholder="นิยามเสร็จ"></div>
+        <div><input id="lo-b3" type="text" placeholder="Big 3"><input id="lo-b3def" type="text" placeholder="นิยามเสร็จ"></div>
+      </div>
+      <div class="grid-2" style="margin-top:8px">
+        <div><label>WIP Slot A</label><input id="lo-wipA" type="text" placeholder="กำลังทำ #1"></div>
+        <div><label>WIP Slot B</label><input id="lo-wipB" type="text" placeholder="กำลังทำ #2"></div>
+      </div>
+    </section>
+
+    <section class="card" id="habits">
+      <h2>Habit Tracker</h2>
+      <div class="grid-7">
+        <div style="color:#94a3b8;font-size:13px">นอน ≥ 7 ชม.</div>
+        <input type="checkbox" id="lo-h-sleep-mon"><input type="checkbox" id="lo-h-sleep-tue"><input type="checkbox" id="lo-h-sleep-wed"><input type="checkbox" id="lo-h-sleep-thu"><input type="checkbox" id="lo-h-sleep-fri"><input type="checkbox" id="lo-h-sleep-sat"><input type="checkbox" id="lo-h-sleep-sun">
+      </div>
+      <div class="grid-7">
+        <div style="color:#94a3b8;font-size:13px">น้ำก่อนกาแฟ</div>
+        <input type="checkbox" id="lo-h-water-mon"><input type="checkbox" id="lo-h-water-tue"><input type="checkbox" id="lo-h-water-wed"><input type="checkbox" id="lo-h-water-thu"><input type="checkbox" id="lo-h-water-fri"><input type="checkbox" id="lo-h-water-sat"><input type="checkbox" id="lo-h-water-sun">
+      </div>
+      <div class="grid-7">
+        <div style="color:#94a3b8;font-size:13px">แดดเช้า 5–10 นาที</div>
+        <input type="checkbox" id="lo-h-sun-mon"><input type="checkbox" id="lo-h-sun-tue"><input type="checkbox" id="lo-h-sun-wed"><input type="checkbox" id="lo-h-sun-thu"><input type="checkbox" id="lo-h-sun-fri"><input type="checkbox" id="lo-h-sun-sat"><input type="checkbox" id="lo-h-sun-sun">
+      </div>
+    </section>
+
+    <section class="card" id="security">
+      <h2>ความปลอดภัย</h2>
+      <p class="muted tiny">โหมดนี้ใช้ <strong>AES-256-GCM + Passcode</strong> และ <strong>WebAuthn</strong> (Face/Touch ID) เป็นเกตก่อนปลดล็อก (ต้องใช้บน <strong>HTTPS</strong> หรือ <code>localhost</code>).</p>
+      <div class="row">
+        <button class="btn brand" id="btn-enable-bio">เปิดใช้ Face/Touch ID</button>
+        <button class="btn" id="btn-revoke-bio">ปิดการใช้ Face/Touch ID</button>
+      </div>
+    </section>
+
+    <div class="footer-note">Build 2025-08-25 08:42</div>
+  </div>
+
+  <div class="lock" id="lock">
+    <div class="panel">
+      <h2 id="lock-title">ตั้งรหัสผ่าน Life OS</h2>
+      <p class="muted tiny" id="lock-desc">รหัสนี้ใช้เข้ารหัสข้อมูลทั้งหมดในเครื่อง (หากลืมจะกู้ไม่ได้)</p>
+      <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-top:8px">
+        <input id="pass1" type="password" placeholder="รหัสผ่าน (≥ 8 ตัว)">
+        <input id="pass2" type="password" placeholder="ยืนยันรหัสผ่าน">
+        <div class="row" style="justify-content:space-between;align-items:center">
+          <label style="display:flex;align-items:center;gap:8px"><input id="lo-theme-lock" type="checkbox"> Dark</label>
+          <div class="row" style="justify-content:flex-end;gap:10px">
+            <button class="btn" id="btn-only-bio" title="ต้องเคยเปิดใช้งานก่อน">ใช้ Face/Touch ID</button>
+            <button class="btn brand" id="btn-unlock">ตกลง</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="bar">
+    <div class="inner">
+      <button class="btn brand" id="btn-save">บันทึกแล้ว • เข้ารหัส</button>
+      <button class="btn warn" id="btn-reset-day">Reset Day</button>
+      <button class="btn danger" id="btn-reset-week">Reset Week</button>
+      <button class="btn" id="btn-export">Export</button>
+      <button class="btn" id="btn-import">Import</button>
+      <button class="btn" id="btn-change-pass">เปลี่ยนรหัสผ่าน</button>
+    </div>
+  </nav>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
